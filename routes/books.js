@@ -20,11 +20,11 @@ router.get('/',async (req,res)=>{
     {
         query = query.regex('title',new RegExp(req.query.title),'i')
     }
-    if(req.query.publishedBefore!=null && req.query.publishedBefore!==''){
-        query = query.lte('publishDate',req.query.publishedBefore);
+    if (req.query.publishedBefore != null && req.query.publishedBefore !== '') {
+        query = query.where('publishDate').lte(new Date(req.query.publishedBefore));
     }
-    if(req.query.publishedAfter!=null && req.query.publishedAfter!==''){
-        query = query.gte('publishDate',req.query.publishedAfter);
+    if (req.query.publishedAfter != null && req.query.publishedAfter !== '') {
+        query = query.where('publishDate').gte(new Date(req.query.publishedAfter));
     }
     try {
         const books = await query.exec();
